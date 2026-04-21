@@ -35,6 +35,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     implementation ("info.picocli:picocli:4.7.7")
     implementation ("tools.jackson.core:jackson-databind:3.0.0")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2")
 }
 
 tasks.getByName<Test>("test") {

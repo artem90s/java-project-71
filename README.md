@@ -9,4 +9,6 @@
 
 ### ScreenShots
 ![img.png](app/src/main/resources/img.png)
+![img_1.png](app/src/main/resources/img_1.png)
+![img_2.png](app/src/main/resources/img2.png)
 
