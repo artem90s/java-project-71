@@ -1,59 +1,53 @@
 package hexlet.code;
 
-import tools.jackson.databind.ObjectMapper;
-
-import java.io.File;
 import java.nio.file.Paths;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class Differ {
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    public static String generate(String content1, String content2, String format) throws Exception {
+        Map<String, Object> file1 = new TreeMap<>(getData(content1));
+        Map<String, Object> file2 = new TreeMap<>(getData(content2));
+        List<DiffNode> result = buildDiff(file1, file2);
+        return Formatter.format(result, format);
+    }
 
     public static String generate(String content1, String content2) throws Exception {
-        Map file1 = new TreeMap(getData(content1));
-        Map file2 = new TreeMap(getData(content2));
-        Map<String, String> result = new LinkedHashMap<>();
-        for (Object key : file1.keySet()) {
-            if (file2.containsKey(key)) {
-                if (file1.get(key).equals(file2.get(key))) {
-                    result.put((String) key, (String) file2.get(key).toString());
-                } else {
-                    String value1 = file1.get(key).toString();
-                    String value2 = file2.get(key).toString();
-                    result.put("- " + key, value1);
-                    result.put("+ " + key, value2);
-                }
-            } else {
-                result.put("- " + key, file1.get(key).toString());
-            }
-        }
-        for (Object key : file2.keySet()) {
+        return generate(content1, content2, "null");
+    }
+
+    private static List<DiffNode> buildDiff(Map<String, Object> file1, Map<String, Object> file2) {
+        Set<String> keys = new TreeSet<>();
+        keys.addAll(file1.keySet());
+        keys.addAll(file2.keySet());
+        List<DiffNode> result = new ArrayList<>();
+
+        for (String key : keys) {
             if (!file1.containsKey(key)) {
-                result.put("+ " + key, file2.get(key).toString());
+                result.add(new DiffNode(key, null, file2.get(key), Status.ADDED));
+            } else if (!file2.containsKey(key)) {
+                result.add(new DiffNode(key, file1.get(key), null, Status.REMOVED));
+            } else if (Objects.equals(file1.get(key), file2.get(key))) {
+                result.add(new DiffNode(key, file1.get(key), file2.get(key), Status.UNCHANGED));
+            } else {
+                result.add(new DiffNode(key, file1.get(key), file2.get(key), Status.UPDATED));
             }
         }
-        return print(result);
+
+        return result;
     }
 
-    public static Map getData(String content) throws Exception {
+    public static Map<String, Object> getData(String content) throws Exception {
         var path = Paths.get(content).toAbsolutePath().toString();
-        return parse(path);
+        return Parser.parse(path);
     }
 
-    private static Map parse(String content) {
-        return MAPPER.readValue(new File(content), Map.class);
-    }
 
-    private static String print(Map<String, String> res) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{" + "\n");
-        for (Map.Entry<String, String> entry : res.entrySet()) {
-            sb.append(" " + entry.getKey() + ": " + entry.getValue() + "\n");
-        }
-        sb.append("}");
-        return sb.toString();
-    }
 
 }
