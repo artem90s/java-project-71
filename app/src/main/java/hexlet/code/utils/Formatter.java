@@ -1,5 +1,6 @@
-package hexlet.code;
+package hexlet.code.utils;
 
+import hexlet.code.dto.DiffNode;
 import hexlet.code.formatter.Json;
 
 import java.util.List;

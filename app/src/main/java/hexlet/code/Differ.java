@@ -1,5 +1,10 @@
 package hexlet.code;
 
+import hexlet.code.dto.DiffNode;
+import hexlet.code.dto.Status;
+import hexlet.code.utils.Formatter;
+import hexlet.code.utils.Parser;
+
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;

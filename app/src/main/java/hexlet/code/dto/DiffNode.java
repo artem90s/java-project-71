@@ -1,4 +1,5 @@
-package hexlet.code;
+package hexlet.code.dto;
+
 public final class DiffNode {
     private String key;
     private Object oldValue;

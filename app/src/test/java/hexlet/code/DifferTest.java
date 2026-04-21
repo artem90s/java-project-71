@@ -2,6 +2,8 @@ package hexlet.code;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.dto.DiffNode;
+import hexlet.code.dto.Status;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -142,3 +144,4 @@ class DifferTest {
         assertEquals(plain, expectedPlain);
     }
 }
+
