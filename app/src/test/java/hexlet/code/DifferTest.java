@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.dto.DiffNode;
 import hexlet.code.dto.Status;
-import hexlet.code.service.Differ;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;

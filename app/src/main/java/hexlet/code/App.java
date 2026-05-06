@@ -1,6 +1,5 @@
 package hexlet.code;
 
-import hexlet.code.service.Differ;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;

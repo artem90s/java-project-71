@@ -1,6 +1,10 @@
-package hexlet.code.service;
+package hexlet.code;
 
 import hexlet.code.dto.DiffNode;
+import hexlet.code.service.Extractor;
+import hexlet.code.service.Formatter;
+import hexlet.code.service.Matcher;
+import hexlet.code.service.Parser;
 
 import java.util.List;
 import java.util.Map;
