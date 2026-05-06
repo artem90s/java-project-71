@@ -3,7 +3,9 @@ package hexlet.code.formatter;
 import hexlet.code.dto.DiffNode;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class Plain {
     public static String plain(List<DiffNode> diff) {
@@ -19,7 +21,8 @@ public class Plain {
                     String format = "Property '%s' was updated. From %s to %s".formatted(key, oldValue, newValue);
                     formatting.add(format);
                 }
-                case UNCHANGED -> { }
+                case UNCHANGED -> {
+                }
                 default -> throw new IllegalArgumentException("Неизвестный статус");
             }
         }
@@ -37,7 +40,11 @@ public class Plain {
                 || value instanceof Boolean) {
             return value.toString();
         }
-        return "[complex value]";
+        if (value instanceof Collection
+                || value instanceof Map) {
+            return "[complex value]";
+        }
+        return value.toString();
     }
 
 }

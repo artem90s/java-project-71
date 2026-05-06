@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.dto.DiffNode;
 import hexlet.code.dto.Status;
+import hexlet.code.service.Differ;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -142,6 +143,107 @@ class DifferTest {
 
         assertEquals(stylish, expectedStylish);
         assertEquals(plain, expectedPlain);
+    }
+
+    @Test
+    void testJsonToDefault() throws Exception {
+        String f1 = "src/test/resources/fixtures/file_1.json";
+        String f2 = "src/test/resources/fixtures/file_2.json";
+
+        String result = Differ.generate(f1, f2);
+        String expected = Files.readString(Path.of("src/test/resources/fixtures/result_stylish.txt"));
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void testJsonToStylish() throws Exception {
+        String f1 = "src/test/resources/fixtures/file_1.json";
+        String f2 = "src/test/resources/fixtures/file_2.json";
+
+        String result = Differ.generate(f1, f2, "stylish");
+        String expected = Files.readString(Path.of("src/test/resources/fixtures/result_stylish.txt"));
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void testJsonToPlain() throws Exception {
+        String f1 = "src/test/resources/fixtures/file_1.json";
+        String f2 = "src/test/resources/fixtures/file_2.json";
+
+        String result = Differ.generate(f1, f2, "plain");
+        String expected = Files.readString(Path.of("src/test/resources/fixtures/result_plain.txt"));
+
+        assertEquals(expected.trim(), result.trim());
+    }
+
+    @Test
+    void testJsonToJson() throws Exception {
+        String f1 = "src/test/resources/fixtures/file1.json";
+        String f2 = "src/test/resources/fixtures/file3.json";
+
+        String result = Differ.generate(f1, f2, "json");
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actual = mapper.readTree(result);
+
+        JsonNode expected = mapper.readTree(
+                Files.readString(Path.of("src/test/resources/fixtures/result_json.txt"))
+        );
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testYmlToDefault() throws Exception {
+        String f1 = "src/test/resources/fixtures/file1.yml";
+        String f2 = "src/test/resources/fixtures/file2.yml";
+
+        String result = Differ.generate(f1, f2);
+        String expected = Files.readString(Path.of("src/test/resources/fixtures/result_stylish.txt"));
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void testYmlToStylish() throws Exception {
+        String f1 = "src/test/resources/fixtures/file1.yml";
+        String f2 = "src/test/resources/fixtures/file2.yml";
+
+
+        String result = Differ.generate(f1, f2, "stylish");
+        String expected = Files.readString(Path.of("src/test/resources/fixtures/result_stylish.txt"));
+
+        assertEquals(expected, result);
+    }
+//
+    @Test
+    void testYmlToPlain() throws Exception {
+        String f1 = "src/test/resources/fixtures/file1.yml";
+        String f2 = "src/test/resources/fixtures/file2.yml";
+
+        String result = Differ.generate(f1, f2, "plain");
+        String expected = Files.readString(Path.of("src/test/resources/fixtures/result_plain.txt"));
+
+        assertEquals(expected.trim(), result.trim());
+    }
+
+    @Test
+    void testYmlToJson() throws Exception {
+        String f1 = "src/test/resources/fixtures/f1le.yaml";
+        String f2 = "src/test/resources/fixtures/f3le.yaml";
+
+        String result = Differ.generate(f1, f2, "json");
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actual = mapper.readTree(result);
+
+        JsonNode expected = mapper.readTree(
+                Files.readString(Path.of("src/test/resources/fixtures/result_json.txt"))
+        );
+
+        assertEquals(expected, actual);
     }
 }
 

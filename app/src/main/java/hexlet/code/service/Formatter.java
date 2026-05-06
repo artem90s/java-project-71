@@ -1,4 +1,4 @@
-package hexlet.code.utils;
+package hexlet.code.service;
 
 import hexlet.code.dto.DiffNode;
 import hexlet.code.formatter.Json;
@@ -11,11 +11,15 @@ import static hexlet.code.formatter.Stylish.stylish;
 public class Formatter {
 
 
-    public static String format(List<DiffNode> result, String format) {
+    public static String format(List<DiffNode> result, String format) throws Exception {
+        if (format == null) {
+            format = "stylish";
+        }
         return switch (format) {
             case "plain" -> plain(result);
             case "json" -> Json.format(result);
-            default -> stylish(result);
+            case "stylish" -> stylish(result);
+            default -> throw new IllegalArgumentException("Неизвестный формат" + format);
         };
     }
 }

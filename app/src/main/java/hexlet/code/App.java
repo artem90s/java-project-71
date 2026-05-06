@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.service.Differ;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -22,8 +23,14 @@ public final class App implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() throws Exception {
-        System.out.println(Differ.generate(filepath1, filepath2, format));
+    public Integer call() {
+        String res;
+        try {
+            res = Differ.generate(filepath1, filepath2, format);
+        } catch (Exception e) {
+            throw new RuntimeException("Произошла ошибка: " + e.getMessage());
+        }
+        System.out.println(res);
         return 0;
     }
 }
