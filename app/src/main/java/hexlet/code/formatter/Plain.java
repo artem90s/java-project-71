@@ -23,7 +23,7 @@ public class Plain {
                 }
                 case UNCHANGED -> {
                 }
-                default -> throw new IllegalArgumentException("Неизвестный статус");
+                default -> throw new IllegalArgumentException("Неизвестный статус " + node.getStatus());
             }
         }
         return String.join("\n", formatting);

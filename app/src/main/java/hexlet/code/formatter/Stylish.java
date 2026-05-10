@@ -41,7 +41,7 @@ public class Stylish {
                         .append(formatValue(node.getOldValue()))
                         .append("\n");
 
-                default -> throw new IllegalArgumentException("Неизвестный тип состояния");
+                default -> throw new IllegalArgumentException("Неизвестный тип состояния " + node.getStatus());
             }
         }
         sb.append("}");

@@ -1,5 +1,4 @@
 plugins {
-    id("java")
     id ("com.github.ben-manes.versions") version "0.53.0"
     application
     checkstyle
@@ -36,6 +35,10 @@ dependencies {
     implementation ("info.picocli:picocli:4.7.7")
     implementation ("com.fasterxml.jackson.core:jackson-databind:2.15.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
+}
+
+dependencyLocking {
+    lockAllConfigurations()
 }
 
 tasks.getByName<Test>("test") {
